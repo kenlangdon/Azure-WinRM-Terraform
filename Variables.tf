@@ -1,4 +1,13 @@
 # Azure Options
+
+variable "azure_sub_id" {
+  default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+
+variable "azure_tenant_id" {
+  default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+
 variable "azure_region" {
   default     = "centralus" # Use region shortname here as it's interpolated into the URLs
   description = "The location/region where the resources are created."

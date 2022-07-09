@@ -25,7 +25,7 @@ resource "azurerm_network_interface" "win_ip" {
   ip_configuration {
     name                          = "win_ipconf"
     subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "static"
+    private_ip_address_allocation = "Static"
     private_ip_address            = "10.1.1.10"
     public_ip_address_id          = azurerm_public_ip.win_pubip.id
   }
@@ -72,7 +72,7 @@ resource "azurerm_virtual_machine" "win" {
   os_profile_windows_config {
     provision_vm_agent = true
     winrm {
-      protocol = "http"
+      protocol = "HTTP"
     }
     # Auto-Login's required to configure WinRM
     additional_unattend_config {
@@ -89,7 +89,7 @@ resource "azurerm_virtual_machine" "win" {
       setting_name = "FirstLogonCommands"
       content      = file("./files/FirstLogonCommands.xml")
     }
-  }
+   }
 
   tags = {
     X-Dept        = var.tag_dept
@@ -110,16 +110,16 @@ resource "azurerm_virtual_machine" "win" {
     password = var.password
   }
 
-  provisioner "file" {
-    source      = "files/config.ps1"
-    destination = "c:/terraform/config.ps1"
-  }
+  # provisioner "file" {
+  #   source      = "files/config.ps1"
+  #   destination = "c:/terraform/config.ps1"
+  # }
 
-  provisioner "remote-exec" {
-    inline = [
-      "PowerShell.exe -ExecutionPolicy Bypass c:\\terraform\\config.ps1",
-    ]
-  }
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "PowerShell.exe -ExecutionPolicy Bypass c:\\terraform\\config.ps1",
+  #   ]
+  # }
 }
 
 output "public_fqdn" {
